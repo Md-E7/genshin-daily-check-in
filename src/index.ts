@@ -1,5 +1,6 @@
-import { act_id, cookie } from '../config.json'
+import { act_id, cookie, discord_webhook_url } from '../config.json'
 import { ofetch } from 'ofetch'
+import { WebhookClient } from 'discord.js'
 
 interface CheckInResponse {
   data: any
@@ -13,32 +14,16 @@ interface ReCheckInResponse {
   retcode: number
 }
 
-const checkIn = async (): Promise<boolean> => {
-  const response = await ofetch<CheckInResponse>(' https://sg-hk4e-api.hoyolab.com/event/sol/sign', {
-    method: 'POST',
-    query: {
-      act_id
-    },
-    headers: {
-      cookie
-    }
-  }).catch(reason => {
-    throw new Error(reason)
+const webhookClient: WebhookClient | null = discord_webhook_url.length !== 0 ? new WebhookClient({ url: discord_webhook_url }) : null
+
+const sendWebHookMessage = async (message: string): Promise<any> => {
+  return await webhookClient?.send({
+    content: `> **${message}**`
   })
-
-  if (response.message === 'OK') {
-    console.info(response)
-
-    return true
-  }
-
-  console.error(response)
-
-  return false
 }
 
-const reCheckIn = async (): Promise<boolean> => {
-  const response = await ofetch<ReCheckInResponse>(' https://sg-hk4e-api.hoyolab.com/event/sol/resign', {
+const checkIn = async (): Promise<CheckInResponse> => {
+  return await ofetch<CheckInResponse>(' https://sg-hk4e-api.hoyolab.com/event/sol/sign', {
     method: 'POST',
     query: {
       act_id
@@ -46,27 +31,35 @@ const reCheckIn = async (): Promise<boolean> => {
     headers: {
       cookie
     }
-  }).catch(reason => {
-    throw new Error(reason)
   })
+}
 
-  if (response.message === 'OK') {
-    console.info(response)
-
-    return true
-  }
-
-  console.error(response)
-
-  return false
+const reCheckIn = async (): Promise<ReCheckInResponse> => {
+  return await ofetch<ReCheckInResponse>(' https://sg-hk4e-api.hoyolab.com/event/sol/resign', {
+    method: 'POST',
+    query: {
+      act_id
+    },
+    headers: {
+      cookie
+    }
+  })
 }
 
 const init = (): void => {
-  void checkIn()
+  void checkIn().then(async response => {
+    console.info(response.message)
+    await sendWebHookMessage(response.message)
+  }).catch(reason => {
+    throw new Error(reason)
+  })
 
-  setTimeout(() => {
-    void reCheckIn()
-  }, 3 * 1000)
+  void reCheckIn().then(async response => {
+    console.info(response.message)
+    await sendWebHookMessage(response.message)
+  }).catch(reason => {
+    throw new Error(reason)
+  })
 }
 
 init()
