@@ -20,6 +20,30 @@ const checkIn = async () => {
         }
     });
 };
+const completeTask = async (id) => {
+    return await (0, ofetch_1.ofetch)('https://sg-hk4e-api.hoyolab.com/event/sol/task/complete', {
+        method: 'POST',
+        query: {
+            act_id: config_json_1.act_id,
+            id
+        },
+        headers: {
+            cookie: config_json_1.cookie
+        }
+    });
+};
+const claimAward = async (id) => {
+    return await (0, ofetch_1.ofetch)('https://sg-hk4e-api.hoyolab.com/event/sol/task/award', {
+        method: 'POST',
+        query: {
+            act_id: config_json_1.act_id,
+            id
+        },
+        headers: {
+            cookie: config_json_1.cookie
+        }
+    });
+};
 const reCheckIn = async () => {
     return await (0, ofetch_1.ofetch)(' https://sg-hk4e-api.hoyolab.com/event/sol/resign', {
         method: 'POST',
@@ -32,18 +56,34 @@ const reCheckIn = async () => {
     });
 };
 const init = () => {
-    void checkIn().then(async (response) => {
-        console.info(response.message);
-        await sendWebHookMessage(response.message);
+    checkIn().then(response => {
+        console.info(`[Check In]: ${JSON.stringify(response)}`);
+        void sendWebHookMessage(response.message);
     }).catch(reason => {
         throw new Error(reason);
     });
-    void reCheckIn().then(async (response) => {
-        console.info(response.message);
-        await sendWebHookMessage(response.message);
-    }).catch(reason => {
-        throw new Error(reason);
-    });
+    for (let i = 1; i <= 3; i++) {
+        setTimeout(() => {
+            completeTask(i).then(response => {
+                console.info(`[Complete Task]: ${JSON.stringify(response)}`);
+            }).catch(reason => {
+                throw new Error(reason);
+            });
+            claimAward(i).then(response => {
+                console.info(`[Claim Award]: ${JSON.stringify(response)}`);
+            }).catch(reason => {
+                throw new Error(reason);
+            });
+        }, i * 3 * 1000);
+    }
+    setTimeout(() => {
+        reCheckIn().then(response => {
+            console.info(`[Re Check In]: ${JSON.stringify(response)}`);
+            void sendWebHookMessage(response.message);
+        }).catch(reason => {
+            throw new Error(reason);
+        });
+    }, 12 * 1000);
 };
 init();
 setInterval(init, 24 * 60 * 60 * 1000);
