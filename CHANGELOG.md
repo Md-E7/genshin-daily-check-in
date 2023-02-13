@@ -1,5 +1,17 @@
 # Changelog
 
+<a name="0.3.0"></a>
+## 0.3.0 (2023-02-13)
+
+### Added
+
+- ✨ Add auto complete task and auto claim award for recheck-in [[323f4be](https://github.com/Md-E7/genshin-daily-check-in/commit/323f4be1fd5a70269286a123764d09c36c6098a6)]
+
+### Miscellaneous
+
+- 📦 run npm build [[03e1a04](https://github.com/Md-E7/genshin-daily-check-in/commit/03e1a04d0eee94695e9cbf3c9d4c7f0b05b4f6a3)]
+
+
 <a name="0.2.0"></a>
 ## 0.2.0 (2023-02-13)
 
