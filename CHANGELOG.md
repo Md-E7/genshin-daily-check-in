@@ -1,5 +1,22 @@
 # Changelog
 
+<a name="0.2.0"></a>
+## 0.2.0 (2023-02-13)
+
+### Added
+
+- ✨ Send response message to discord if discord_webhook_url not empty [[05d7265](https://github.com/Md-E7/genshin-daily-check-in/commit/05d72656f875d5987bace853233986aea28adcee)]
+- ➕ Add discord.js [[251bc63](https://github.com/Md-E7/genshin-daily-check-in/commit/251bc63ca31fb7eda4057c34d9202f6db84bee3e)]
+
+### Changed
+
+- 🔧 Update config.example.json add discord_webhook_url [[85147e3](https://github.com/Md-E7/genshin-daily-check-in/commit/85147e3be586226f9ffa8ba428858547c09a56cc)]
+
+### Miscellaneous
+
+- 📦 run npm build [[894a2cc](https://github.com/Md-E7/genshin-daily-check-in/commit/894a2cc6cb090a96fd5da826bb48f507c0d252b2)]
+
+
 <a name="0.1.0"></a>
 ## 0.1.0 (2023-02-13)
 
