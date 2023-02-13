@@ -8,6 +8,18 @@ interface CheckInResponse {
   retcode: number
 }
 
+interface CompleteTaskResponse {
+  data: any
+  message: string
+  retcode: number
+}
+
+interface AwardResponse {
+  data: any
+  message: string
+  retcode: number
+}
+
 interface ReCheckInResponse {
   data: any
   message: string
@@ -34,6 +46,32 @@ const checkIn = async (): Promise<CheckInResponse> => {
   })
 }
 
+const completeTask = async (id: number): Promise<CompleteTaskResponse> => {
+  return await ofetch<CompleteTaskResponse>('https://sg-hk4e-api.hoyolab.com/event/sol/task/complete', {
+    method: 'POST',
+    query: {
+      act_id,
+      id
+    },
+    headers: {
+      cookie
+    }
+  })
+}
+
+const claimAward = async (id: number): Promise<AwardResponse> => {
+  return await ofetch<AwardResponse>('https://sg-hk4e-api.hoyolab.com/event/sol/task/award', {
+    method: 'POST',
+    query: {
+      act_id,
+      id
+    },
+    headers: {
+      cookie
+    }
+  })
+}
+
 const reCheckIn = async (): Promise<ReCheckInResponse> => {
   return await ofetch<ReCheckInResponse>(' https://sg-hk4e-api.hoyolab.com/event/sol/resign', {
     method: 'POST',
@@ -47,19 +85,37 @@ const reCheckIn = async (): Promise<ReCheckInResponse> => {
 }
 
 const init = (): void => {
-  void checkIn().then(async response => {
-    console.info(response.message)
-    await sendWebHookMessage(response.message)
+  checkIn().then(response => {
+    console.info(`[Check In]: ${JSON.stringify(response)}`)
+    void sendWebHookMessage(response.message)
   }).catch(reason => {
     throw new Error(reason)
   })
 
-  void reCheckIn().then(async response => {
-    console.info(response.message)
-    await sendWebHookMessage(response.message)
-  }).catch(reason => {
-    throw new Error(reason)
-  })
+  for (let i = 1; i <= 3; i++) {
+    setTimeout(() => {
+      completeTask(i).then(response => {
+        console.info(`[Complete Task]: ${JSON.stringify(response)}`)
+      }).catch(reason => {
+        throw new Error(reason)
+      })
+
+      claimAward(i).then(response => {
+        console.info(`[Claim Award]: ${JSON.stringify(response)}`)
+      }).catch(reason => {
+        throw new Error(reason)
+      })
+    }, i * 3 * 1000)
+  }
+
+  setTimeout(() => {
+    reCheckIn().then(response => {
+      console.info(`[Re Check In]: ${JSON.stringify(response)}`)
+      void sendWebHookMessage(response.message)
+    }).catch(reason => {
+      throw new Error(reason)
+    })
+  }, 12 * 1000)
 }
 
 init()
