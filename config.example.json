@@ -1,5 +1,10 @@
 {
-  "act_id": "",
-  "cookie": "",
-  "discord_webhook_url": ""
+  "discord_webhook_url": "",
+  "accounts": [
+    {
+      "name": "Unnamed",
+      "act_id": "",
+      "cookie": ""
+    }
+  ]
 }
