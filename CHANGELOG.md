@@ -1,5 +1,13 @@
 # Changelog
 
+<a name="0.5.1"></a>
+## 0.5.1 (2023-02-14)
+
+### Fixed
+
+- 🐛 Fix message [[28f006e](https://github.com/Md-E7/genshin-daily-check-in/commit/28f006eaa622ea571e0ba3face8425251f304310)]
+
+
 <a name="0.5.0"></a>
 ## 0.5.0 (2023-02-14)
 
