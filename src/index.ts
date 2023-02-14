@@ -28,6 +28,8 @@ interface ReCheckInResponse {
 
 const webhookClient: WebhookClient | null = discord_webhook_url.length !== 0 ? new WebhookClient({ url: discord_webhook_url }) : null
 
+const delay = async (ms: number): Promise<unknown> => await new Promise(resolve => setTimeout(resolve, ms))
+
 const sendWebHookMessage = async (message: string): Promise<any> => {
   return await webhookClient?.send({
     content: `> **${message}**`
@@ -84,40 +86,49 @@ const reCheckIn = async (): Promise<ReCheckInResponse> => {
   })
 }
 
-const init = (): void => {
-  checkIn().then(response => {
-    console.info(`[Check In]: ${JSON.stringify(response)}`)
-    void sendWebHookMessage(response.message)
-  }).catch(reason => {
+const init = async (): Promise<void> => {
+  const checkInResponse = await checkIn().catch(reason => {
     throw new Error(reason)
   })
 
+  console.info(`[Check In]: ${JSON.stringify(checkInResponse)}`)
+  void sendWebHookMessage(checkInResponse.message)
+
+  await delay(3 * 1000)
+
   for (let i = 1; i <= 3; i++) {
-    setTimeout(() => {
-      completeTask(i).then(response => {
-        console.info(`[Complete Task]: ${JSON.stringify(response)}`)
-      }).catch(reason => {
-        throw new Error(reason)
-      })
+    await delay(3 * 1000)
 
-      claimAward(i).then(response => {
-        console.info(`[Claim Award]: ${JSON.stringify(response)}`)
-      }).catch(reason => {
-        throw new Error(reason)
-      })
-    }, i * 3 * 1000)
-  }
-
-  setTimeout(() => {
-    reCheckIn().then(response => {
-      console.info(`[Re Check In]: ${JSON.stringify(response)}`)
-      void sendWebHookMessage(response.message)
-    }).catch(reason => {
+    const completeTaskResponse = await completeTask(i).catch(reason => {
       throw new Error(reason)
     })
-  }, 12 * 1000)
+
+    console.info(`[Complete Task]: ${JSON.stringify(completeTaskResponse)}`)
+
+    const claimAwardResponse = await claimAward(i).catch(reason => {
+      throw new Error(reason)
+    })
+
+    console.info(`[Claim Award]: ${JSON.stringify(claimAwardResponse)}`)
+  }
+
+  await delay(3 * 1000)
+
+  const reCheckInResponse = await reCheckIn().catch(reason => {
+    throw new Error(reason)
+  })
+
+  console.info(`[Re Check In]: ${JSON.stringify(reCheckInResponse)}`)
+  void sendWebHookMessage(reCheckInResponse.message)
+
+  await delay(3 * 1000)
+
+  console.log('Auto daily check in will be repeat in 24 hours')
+  void sendWebHookMessage('Genshin impact auto daily check in will be repeat in 24 hours')
 }
 
-init()
+void init()
 
-setInterval(init, 24 * 60 * 60 * 1000)
+setInterval(() => {
+  void init()
+}, 24 * 60 * 60 * 1000)
