@@ -52,7 +52,7 @@ Setelah config.json sudah ada di folder dist edit config.json menggunakan notepa
 ```shell
 notepad dist/config.json
 ```
-Setelah text/code editor terbuka isi act_id dan cookie seperti yang kalian dapat dari browser devtools atau http canary
+Setelah text/code editor terbuka isi act_id dan cookie seperti yang kalian dapat dari browser devtools
 
 ```json
 {
@@ -81,6 +81,11 @@ Untuk melakukan auto check in di banyak akun lakukan seperti ini
       "name": "Akun 2",
       "act_id": "masukan act_id akun ke 2 kalian ke sini",
       "cookie": "masukan cookie akun ke 2 kalian ke sini"
+    },
+    {
+      "name": "Akun 3",
+      "act_id": "masukan act_id akun ke 3 kalian ke sini",
+      "cookie": "masukan cookie akun ke 3 kalian ke sini"
     }
   ]
 }
@@ -124,7 +129,7 @@ Setelah config.json sudah ada di folder dist edit config.json menggunakan nano a
 nano dist/config.json
 ```
 
-Setelah text/code editor terbuka isi act_id dan cookie seperti yang kalian dapat dari browser devtools atau http canary
+Setelah text/code editor terbuka isi act_id dan cookie seperti yang kalian dapat dari browser devtools
 
 ```json
 {
@@ -153,6 +158,11 @@ Untuk melakukan auto check in di banyak akun lakukan seperti ini
       "name": "Akun 2",
       "act_id": "masukan act_id akun ke 2 kalian ke sini",
       "cookie": "masukan cookie akun ke 2 kalian ke sini"
+    },
+    {
+      "name": "Akun 3",
+      "act_id": "masukan act_id akun ke 3 kalian ke sini",
+      "cookie": "masukan cookie akun ke 3 kalian ke sini"
     }
   ]
 }
