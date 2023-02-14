@@ -124,7 +124,7 @@ const init = async (): Promise<void> => {
 
     await delay(3 * 1000)
 
-    console.log('Auto daily check in will be repeat in 24 hours')
+    console.log(`[${account.name}] Auto daily check in will be repeat in 24 hours`)
     void sendWebHookMessage(`[${account.name}] Genshin impact auto daily check in will be repeat in 24 hours`)
   }
 }
