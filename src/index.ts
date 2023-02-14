@@ -1,4 +1,4 @@
-import { act_id, cookie, discord_webhook_url } from '../config.json'
+import { discord_webhook_url, accounts } from '../config.json'
 import { ofetch } from 'ofetch'
 import { WebhookClient } from 'discord.js'
 
@@ -36,7 +36,7 @@ const sendWebHookMessage = async (message: string): Promise<any> => {
   })
 }
 
-const checkIn = async (): Promise<CheckInResponse> => {
+const checkIn = async (act_id: string, cookie: string): Promise<CheckInResponse> => {
   return await ofetch<CheckInResponse>(' https://sg-hk4e-api.hoyolab.com/event/sol/sign', {
     method: 'POST',
     query: {
@@ -48,7 +48,7 @@ const checkIn = async (): Promise<CheckInResponse> => {
   })
 }
 
-const completeTask = async (id: number): Promise<CompleteTaskResponse> => {
+const completeTask = async (id: number, act_id: string, cookie: string): Promise<CompleteTaskResponse> => {
   return await ofetch<CompleteTaskResponse>('https://sg-hk4e-api.hoyolab.com/event/sol/task/complete', {
     method: 'POST',
     query: {
@@ -61,7 +61,7 @@ const completeTask = async (id: number): Promise<CompleteTaskResponse> => {
   })
 }
 
-const claimAward = async (id: number): Promise<AwardResponse> => {
+const claimAward = async (id: number, act_id: string, cookie: string): Promise<AwardResponse> => {
   return await ofetch<AwardResponse>('https://sg-hk4e-api.hoyolab.com/event/sol/task/award', {
     method: 'POST',
     query: {
@@ -74,7 +74,7 @@ const claimAward = async (id: number): Promise<AwardResponse> => {
   })
 }
 
-const reCheckIn = async (): Promise<ReCheckInResponse> => {
+const reCheckIn = async (act_id: string, cookie: string): Promise<ReCheckInResponse> => {
   return await ofetch<ReCheckInResponse>(' https://sg-hk4e-api.hoyolab.com/event/sol/resign', {
     method: 'POST',
     query: {
@@ -87,44 +87,46 @@ const reCheckIn = async (): Promise<ReCheckInResponse> => {
 }
 
 const init = async (): Promise<void> => {
-  const checkInResponse = await checkIn().catch(reason => {
-    throw new Error(reason)
-  })
+  for (const account of accounts) {
+    const checkInResponse = await checkIn(account.act_id, account.cookie).catch(reason => {
+      throw new Error(reason)
+    })
 
-  console.info(`[Check In]: ${JSON.stringify(checkInResponse)}`)
-  void sendWebHookMessage(checkInResponse.message)
+    console.info(`[Check In]: ${JSON.stringify(checkInResponse)}`)
+    void sendWebHookMessage(`[${account.name}] ${checkInResponse.message}`)
 
-  await delay(3 * 1000)
-
-  for (let i = 1; i <= 3; i++) {
     await delay(3 * 1000)
 
-    const completeTaskResponse = await completeTask(i).catch(reason => {
+    for (let i = 1; i <= 3; i++) {
+      await delay(3 * 1000)
+
+      const completeTaskResponse = await completeTask(i, account.act_id, account.cookie).catch(reason => {
+        throw new Error(reason)
+      })
+
+      console.info(`[Complete Task]: ${JSON.stringify(completeTaskResponse)}`)
+
+      const claimAwardResponse = await claimAward(i, account.act_id, account.cookie).catch(reason => {
+        throw new Error(reason)
+      })
+
+      console.info(`[Claim Award]: ${JSON.stringify(claimAwardResponse)}`)
+    }
+
+    await delay(3 * 1000)
+
+    const reCheckInResponse = await reCheckIn(account.act_id, account.cookie).catch(reason => {
       throw new Error(reason)
     })
 
-    console.info(`[Complete Task]: ${JSON.stringify(completeTaskResponse)}`)
+    console.info(`[Re Check In]: ${JSON.stringify(reCheckInResponse)}`)
+    void sendWebHookMessage(`[${account.name}] ${reCheckInResponse.message}`)
 
-    const claimAwardResponse = await claimAward(i).catch(reason => {
-      throw new Error(reason)
-    })
+    await delay(3 * 1000)
 
-    console.info(`[Claim Award]: ${JSON.stringify(claimAwardResponse)}`)
+    console.log('Auto daily check in will be repeat in 24 hours')
+    void sendWebHookMessage(`[${account.name}] Genshin impact auto daily check in will be repeat in 24 hours`)
   }
-
-  await delay(3 * 1000)
-
-  const reCheckInResponse = await reCheckIn().catch(reason => {
-    throw new Error(reason)
-  })
-
-  console.info(`[Re Check In]: ${JSON.stringify(reCheckInResponse)}`)
-  void sendWebHookMessage(reCheckInResponse.message)
-
-  await delay(3 * 1000)
-
-  console.log('Auto daily check in will be repeat in 24 hours')
-  void sendWebHookMessage('Genshin impact auto daily check in will be repeat in 24 hours')
 }
 
 void init()
