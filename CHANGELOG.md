@@ -1,5 +1,33 @@
 # Changelog
 
+<a name="0.5.0"></a>
+## 0.5.0 (2023-02-14)
+
+### Added
+
+- ✨ Multiple account daily check in [[f4eebb3](https://github.com/Md-E7/genshin-daily-check-in/commit/f4eebb332b29a917480c16fd68fe49aea0b1f7f6)]
+
+### Changed
+
+- 🔧 Update config.example.json [[6b2f939](https://github.com/Md-E7/genshin-daily-check-in/commit/6b2f93913b0b446bf8d87f2c083b157c7a58fa67)]
+
+### Miscellaneous
+
+- 📦 run npm build [[f40ae9b](https://github.com/Md-E7/genshin-daily-check-in/commit/f40ae9b01deb383d406d499a50762b1069d63ddc)]
+
+
+<a name="0.4.0"></a>
+## 0.4.0 (2023-02-14)
+
+### Added
+
+- ✨ Improve init function and add new message [[a171c1d](https://github.com/Md-E7/genshin-daily-check-in/commit/a171c1db7f44e8d4a99d6d8c311a80e834e38e86)]
+
+### Miscellaneous
+
+- 📦 run npm build [[948d977](https://github.com/Md-E7/genshin-daily-check-in/commit/948d977b691637883bd34878c7b0244113e6a800)]
+
+
 <a name="0.3.0"></a>
 ## 0.3.0 (2023-02-13)
 
