@@ -5,12 +5,30 @@
 
 - [Git](https://git-scm.com/)
 - [Node LTS](https://nodejs.org/)
-- Browser devtools untuk mendapatkan cookie dan act_id
-  - Buka check in page genshin impact dan buka devtools dengan F12
-  - Klik tanda "+" dan pilih "Network" aktifkan "Record network log" setelah itu lakukan login
-  - Setelah melakukan login di bagian table kolom "name" cari yang bertuliskan "info" setelah ketemu klik dan nanti akan membuka menu baru
-  - Setelah menu baru terbuka klik "Headers" terus geser kebawah sampai ketemu "Request Headers" terus cari tulisan "cookie" terus klik kanan dan copy
-  - Untuk mendapatkan "act_id" klik "Payload" terus di bagian "Query String Parameters" cari "act_id" dan copy
+- Browser devtools untuk mendapatkan act_id dan cookie
+  - Buka check in page genshin impact dan pastikan kalian sudah melakukan login dan buka devtools dengan F12 dan pencet tab tulisan "Console" dan jalankan perinah berikut untuk otomatis mendapatkan act_id dan cookie
+  ```javascript
+  const url = new URL(window.location.href)
+  const act_id = url.searchParams.get('act_id')
+  
+  cookieStore.getAll().then(cookies => {
+    let cookie = ''
+    
+    for (const [index, cookieObject] of cookies.entries()) {
+      if (index === cookies.length - 1) {
+        cookie = cookie.concat(`${cookieObject.name}=${cookieObject.value}`)
+      } else {
+        cookie = cookie.concat(`${cookieObject.name}=${cookieObject.value}; `)
+      }
+    }
+  
+    console.log({
+      "name": "Unamed",
+      "act_id": act_id,
+      "cookie": cookie
+    })
+  })
+  ```
 </details>
 
 <details>
@@ -19,13 +37,30 @@
 - [Termux](https://github.com/termux/termux-app/releases)
 - Git
 - Node LTS
-- Kiwi browser untuk membuka devtools dan mendapatkan cookie dan act_id
-    - Buka daily check in page genshin impact dan buka devtools dengan titik tiga vertikal di kanan atas kiwi browser geser kebawah sampai ketemu "Developers tools" klik dan nanti kiwi browser akan membuka devtools di tab baru
-    - (Saran buka daily check in page dan devtools page dalam desktop mode)
-    - Klik tanda ">>" dan pilih "Network" aktifkan "Record network log" setelah itu pindah ke tab daily check in page genshin impact dan lakukan login
-    - Setelah melakukan login di bagian table kolom "name" cari yang bertuliskan "info" setelah ketemu klik dan nanti akan membuka menu baru
-    - Setelah menu baru terbuka klik "Headers" terus geser kebawah sampai ketemu "Request Headers" terus cari tulisan "cookie" terus klik kanan dan copy
-    - Untuk mendapatkan "act_id" klik "Payload" terus di bagian "Query String Parameters" cari "act_id" dan copy
+- Kiwi browser untuk membuka devtools dan mendapatkan act_id dan cookie
+  - Buka daily check in page genshin impact dan pastikan kalian sudah melakukan login dan buka devtools dengan cara pencet titik tiga vertikal di kanan atas kiwi browser geser kebawah sampai ketemu "Developers tools" klik dan nanti kiwi browser akan membuka devtools di tab baru pindah ke tab devtools dan pencet tab tulisan "Console" dan jalankan perinah berikut untuk otomatis mendapatkan act_id dan cookie
+  ```javascript
+  const url = new URL(window.location.href)
+  const act_id = url.searchParams.get('act_id')
+  
+  cookieStore.getAll().then(cookies => {
+    let cookie = ''
+    
+    for (const [index, cookieObject] of cookies.entries()) {
+      if (index === cookies.length - 1) {
+        cookie = cookie.concat(`${cookieObject.name}=${cookieObject.value}`)
+      } else {
+        cookie = cookie.concat(`${cookieObject.name}=${cookieObject.value}; `)
+      }
+    }
+  
+    console.log({
+      "name": "Unamed",
+      "act_id": act_id,
+      "cookie": cookie
+    })
+  })
+  ```
 </details>
 
 ### Instalasi
