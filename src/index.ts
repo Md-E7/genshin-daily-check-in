@@ -1,6 +1,5 @@
-import { discord_webhook_url, accounts } from '../config.json'
+import { accounts } from '../config.json'
 import { ofetch } from 'ofetch'
-import { WebhookClient } from 'discord.js'
 
 interface CheckInResponse {
   data: any
@@ -26,15 +25,7 @@ interface ReCheckInResponse {
   retcode: number
 }
 
-const webhookClient: WebhookClient | null = discord_webhook_url.length !== 0 ? new WebhookClient({ url: discord_webhook_url }) : null
-
 const delay = async (ms: number): Promise<unknown> => await new Promise(resolve => setTimeout(resolve, ms))
-
-const sendWebHookMessage = async (message: string): Promise<any> => {
-  return await webhookClient?.send({
-    content: `> **${message}**`
-  })
-}
 
 const checkIn = async (act_id: string, cookie: string): Promise<CheckInResponse> => {
   return await ofetch<CheckInResponse>(' https://sg-hk4e-api.hoyolab.com/event/sol/sign', {
@@ -93,7 +84,6 @@ const init = async (): Promise<void> => {
     })
 
     console.info(`[Check In]: ${JSON.stringify(checkInResponse)}`)
-    void sendWebHookMessage(`[${account.name}] ${checkInResponse.message}`)
 
     await delay(3 * 1000)
 
@@ -120,12 +110,10 @@ const init = async (): Promise<void> => {
     })
 
     console.info(`[Re Check In]: ${JSON.stringify(reCheckInResponse)}`)
-    void sendWebHookMessage(`[${account.name}] ${reCheckInResponse.message}`)
 
     await delay(3 * 1000)
 
     console.log(`[${account.name}] Auto daily check in will be repeat in 24 hours`)
-    void sendWebHookMessage(`[${account.name}] Genshin impact auto daily check in will be repeat in 24 hours`)
   }
 }
 
