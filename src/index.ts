@@ -83,7 +83,7 @@ const init = async (): Promise<void> => {
       throw new Error(reason)
     })
 
-    console.info(`[Check In]: ${JSON.stringify(checkInResponse)}`)
+    console.info(`[${account.name}] Check-in: ${JSON.stringify(checkInResponse)}`)
 
     await delay(3 * 1000)
 
@@ -94,13 +94,13 @@ const init = async (): Promise<void> => {
         throw new Error(reason)
       })
 
-      console.info(`[Complete Task]: ${JSON.stringify(completeTaskResponse)}`)
+      console.info(`[${account.name}] Complete Task: ${JSON.stringify(completeTaskResponse)}`)
 
       const claimAwardResponse = await claimAward(i, account.act_id, account.cookie).catch(reason => {
         throw new Error(reason)
       })
 
-      console.info(`[Claim Award]: ${JSON.stringify(claimAwardResponse)}`)
+      console.info(`[${account.name}] Claim Award: ${JSON.stringify(claimAwardResponse)}`)
     }
 
     await delay(3 * 1000)
@@ -109,11 +109,11 @@ const init = async (): Promise<void> => {
       throw new Error(reason)
     })
 
-    console.info(`[Re Check In]: ${JSON.stringify(reCheckInResponse)}`)
+    console.info(`[${account.name}] Re-check-in: ${JSON.stringify(reCheckInResponse)}`)
 
     await delay(3 * 1000)
 
-    console.log(`[${account.name}] Auto daily check in will be repeat in 24 hours`)
+    console.info(`[${account.name}] Genshin impact auto daily check in will be repeat in 24 hours`)
   }
 }
 
