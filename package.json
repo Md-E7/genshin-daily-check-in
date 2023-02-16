@@ -30,7 +30,6 @@
     "typescript": "^4.9.5"
   },
   "dependencies": {
-    "discord.js": "^14.7.1",
     "ofetch": "^1.0.0"
   }
 }
