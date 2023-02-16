@@ -1,5 +1,29 @@
 # Changelog
 
+<a name="0.6.0"></a>
+## 0.6.0 (2023-02-16)
+
+### Added
+
+- ✨ Improve message [[a8580ba](https://github.com/Md-E7/genshin-daily-check-in/commit/a8580ba6da7faf7666054422c64dd73d48276613)]
+
+### Changed
+
+- ⚡ Update delay from 3000 ms to 500 ms [[3620d85](https://github.com/Md-E7/genshin-daily-check-in/commit/3620d85b01c180de1558b7eecfae7499c73ee98a)]
+- 🔧 Update config.example.json remove discord_webhook_url [[5b5f86c](https://github.com/Md-E7/genshin-daily-check-in/commit/5b5f86cffcd65a40747573cad654c1a2154a3ef2)]
+
+### Removed
+
+- 🔥 Remove discord.js code [[5210b93](https://github.com/Md-E7/genshin-daily-check-in/commit/5210b9329e9376d6fabbb2e450eb8678098e84e2)]
+- ➖ Remove discord.js [[d03df33](https://github.com/Md-E7/genshin-daily-check-in/commit/d03df33af33f2de82ba38197d267e2714944e058)]
+
+### Miscellaneous
+
+- 📝 Update README.md [[24363ac](https://github.com/Md-E7/genshin-daily-check-in/commit/24363ac25fd4875bc8d23d41b69866846b2a673d)]
+- 📝 Update README.md [[454c1a1](https://github.com/Md-E7/genshin-daily-check-in/commit/454c1a1200f238dd2b42231616580032cd43d991)]
+- 📝 Add README.md [[68f5461](https://github.com/Md-E7/genshin-daily-check-in/commit/68f546138c46242c1a5bf62c78325cc643780fea)]
+
+
 <a name="0.5.1"></a>
 ## 0.5.1 (2023-02-14)
 
