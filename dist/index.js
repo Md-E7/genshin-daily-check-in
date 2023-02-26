@@ -1,7 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const config_json_1 = require("../config.json");
+const fs_1 = require("fs");
 const ofetch_1 = require("ofetch");
+const { accounts } = JSON.parse((0, fs_1.readFileSync)('./config.json', 'utf-8'));
 const delay = async (ms) => await new Promise(resolve => setTimeout(resolve, ms));
 const checkIn = async (act_id, cookie) => {
     return await (0, ofetch_1.ofetch)(' https://sg-hk4e-api.hoyolab.com/event/sol/sign', {
@@ -50,7 +51,13 @@ const reCheckIn = async (act_id, cookie) => {
     });
 };
 const init = async () => {
-    for (const account of config_json_1.accounts) {
+    if (accounts == null) {
+        throw new Error('Invalid config.json structure');
+    }
+    for (const account of accounts) {
+        if (account.name == null || account.act_id == null || account.cookie == null) {
+            throw new Error('Invalid config.json structure');
+        }
         const checkInResponse = await checkIn(account.act_id, account.cookie).catch(reason => {
             throw new Error(reason);
         });
