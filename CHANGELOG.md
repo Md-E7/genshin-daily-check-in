@@ -1,5 +1,13 @@
 # Changelog
 
+<a name="0.6.1"></a>
+## 0.6.1 (2023-02-26)
+
+### Fixed
+
+- 🐛 Fix MODULE_NOT_FOUND when using npm run start [[14378f5](https://github.com/Md-E7/genshin-daily-check-in/commit/14378f5bd66bcc93864deea5a4fc1987dd1f977f)]
+
+
 <a name="0.6.0"></a>
 ## 0.6.0 (2023-02-16)
 
