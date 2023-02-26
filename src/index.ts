@@ -1,5 +1,13 @@
-import { accounts } from '../config.json'
+import { readFileSync } from 'fs'
 import { ofetch } from 'ofetch'
+
+interface Config {
+  accounts: Array<{
+    name: string | null
+    act_id: string | null
+    cookie: string | null
+  }> | null
+}
 
 interface CheckInResponse {
   data: any
@@ -24,6 +32,8 @@ interface ReCheckInResponse {
   message: string
   retcode: number
 }
+
+const { accounts }: Config = JSON.parse(readFileSync('./config.json', 'utf-8'))
 
 const delay = async (ms: number): Promise<unknown> => await new Promise(resolve => setTimeout(resolve, ms))
 
@@ -78,7 +88,15 @@ const reCheckIn = async (act_id: string, cookie: string): Promise<ReCheckInRespo
 }
 
 const init = async (): Promise<void> => {
+  if (accounts == null) {
+    throw new Error('Invalid config.json structure')
+  }
+
   for (const account of accounts) {
+    if (account.name == null || account.act_id == null || account.cookie == null) {
+      throw new Error('Invalid config.json structure')
+    }
+
     const checkInResponse = await checkIn(account.act_id, account.cookie).catch(reason => {
       throw new Error(reason)
     })
