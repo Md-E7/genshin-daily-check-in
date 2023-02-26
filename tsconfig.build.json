@@ -23,8 +23,7 @@
     "importsNotUsedAsValues": "error",
     "allowJs": true,
     "checkJs": true,
-    "outDir": "dist",
-    "resolveJsonModule": true
+    "outDir": "dist"
   },
   "include": [
     "src"
