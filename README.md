@@ -76,16 +76,16 @@ cd genshin-daily-check-in
 npm install
 ```
 
-Setelah npm install selesai copy config.example.json ke folder dist dan ubah nama config.example.json menjadi config.json
+Setelah npm install selesai copy config.example.json dan ubah nama config.example.json menjadi config.json
 
 ```shell
-cp config.example.json dist/config.json
+cp config.example.json config.json
 ```
 
-Setelah config.json sudah ada di folder dist edit config.json menggunakan notepad atau text/code editor yang lain
+Setelah config.json sudah ada di folder edit config.json menggunakan notepad atau text/code editor yang lain
 
 ```shell
-notepad dist/config.json
+notepad config.json
 ```
 Setelah text/code editor terbuka isi act_id dan cookie seperti yang kalian dapat dari browser devtools
 
@@ -152,16 +152,16 @@ cd genshin-daily-check-in
 npm install
 ```
 
-Setelah npm install selesai copy config.example.json ke folder dist dan ubah nama config.example.json menjadi config.json
+Setelah npm install selesai copy config.example.json dan ubah nama config.example.json menjadi config.json
 
 ```shell
-cp config.example.json dist/config.json
+cp config.example.json config.json
 ```
 
-Setelah config.json sudah ada di folder dist edit config.json menggunakan nano atau text/code editor yang lain
+Setelah config.json sudah ada di folder edit config.json menggunakan nano atau text/code editor yang lain
 
 ```shell
-nano dist/config.json
+nano config.json
 ```
 
 Setelah text/code editor terbuka isi act_id dan cookie seperti yang kalian dapat dari browser devtools
