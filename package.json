@@ -1,6 +1,6 @@
 {
   "name": "genshin-daily-check-in",
-  "version": "0.7.0",
+  "version": "1.0.0",
   "main": "dist/index.js",
   "bin": "dist/index.js",
   "author": {

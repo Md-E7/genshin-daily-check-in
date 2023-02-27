@@ -1,5 +1,40 @@
 # Changelog
 
+<a name="1.0.0"></a>
+## 1.0.0 (2023-02-27)
+
+### Added
+
+- ✨ Add cli [[0a411e5](https://github.com/Md-E7/genshin-daily-check-in/commit/0a411e57836e330dfe5b985ab9b81a8ed504833d)]
+- ✨ Move config.json to home directory [[b00a26e](https://github.com/Md-E7/genshin-daily-check-in/commit/b00a26e5c4bb262824c35a61a9924e2b1b1fb1c2)]
+- ✨ Add account commands [[92676a3](https://github.com/Md-E7/genshin-daily-check-in/commit/92676a35a509cf609e7459a269dba062db3ef46b)]
+- ✨ Add start and start-forever command and split the function into several files [[4dd09e3](https://github.com/Md-E7/genshin-daily-check-in/commit/4dd09e3dce660c9175daaa747698ea27f665846b)]
+- ➕ Add node-cron and @types/node-cron [[122a62a](https://github.com/Md-E7/genshin-daily-check-in/commit/122a62a75f9c093c3fb858888e257283bc87054e)]
+- ➕ Add commander [[57490d6](https://github.com/Md-E7/genshin-daily-check-in/commit/57490d67f5cc3c43940e2c8264bcc8e837b5e15b)]
+
+### Miscellaneous
+
+- 📦 npm run build [[293e4de](https://github.com/Md-E7/genshin-daily-check-in/commit/293e4de88971c430f0d8ed8f6f96db003d88888e)]
+- 🔨 Update scripts [[0ec570b](https://github.com/Md-E7/genshin-daily-check-in/commit/0ec570bd1a0b79ecf4c5c195b593b7d80c440a3d)]
+
+
+<a name="0.7.0"></a>
+## 0.7.0 (2023-02-26)
+
+### Added
+
+- ✨ Read config.json with file system [[c18a09c](https://github.com/Md-E7/genshin-daily-check-in/commit/c18a09c1172dfa3250b484ed764308346169b691)]
+
+### Changed
+
+- 🔧 Update tsconfig.json and tsconfig.build.json [[6876668](https://github.com/Md-E7/genshin-daily-check-in/commit/6876668b0cb1cca9ae4170340ceaf1d88d97ea38)]
+
+### Miscellaneous
+
+- 📦 npm run build [[1f8d4c6](https://github.com/Md-E7/genshin-daily-check-in/commit/1f8d4c6ed132ee469f0964c5f06704a41901fcbf)]
+- 🔨 Update start scripts [[364dc13](https://github.com/Md-E7/genshin-daily-check-in/commit/364dc1384a50a93a70908d8965a06717d05c104a)]
+
+
 <a name="0.6.1"></a>
 ## 0.6.1 (2023-02-26)
 
