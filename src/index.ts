@@ -1,12 +1,12 @@
 import { Command } from 'commander'
-import { configData } from './utils/configUtil'
+import { addAccount, getConfig, removeAccount } from './utils/configUtil'
 import { checkIn, claimAward, completeTask, reCheckIn } from './utils/fetchUtil'
 import { delay } from './utils/delayUtil'
 import { schedule } from 'node-cron'
 
 const program = new Command()
 
-const { accounts } = configData
+const { accounts } = getConfig()
 
 const init = async (message: string | null): Promise<void> => {
   if (accounts == null) {
@@ -72,5 +72,26 @@ program.command('start-forever')
       void init('genshin-daily-check-in will be repeated tomorrow at 12:00')
     }, { runOnInit: true })
   })
+
+const accountsCommand = program.command('account')
+  .description('Add or remove account')
+
+accountsCommand.command('add')
+  .argument('<name>', 'Account name')
+  .argument('<act_id>', 'Account act_id')
+  .argument('<cookie>', 'Account cookie')
+  .action((name, act_id, cookie) => {
+    addAccount(name, act_id, cookie)
+  })
+
+accountsCommand.command('remove')
+  .argument('<name>', 'Account name')
+  .action((name) => {
+    removeAccount(name)
+  })
+
+accountsCommand.command('list').action(() => {
+  console.info(accounts)
+})
 
 program.parse()
