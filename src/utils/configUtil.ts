@@ -1,8 +1,20 @@
 import type { Config } from '../types'
-import { readFileSync, writeFileSync } from 'fs'
+import { existsSync, readFileSync, writeFileSync } from 'fs'
+import { homedir } from 'os'
+import path from 'path'
+
+const configFilePath = path.join(homedir(), '.genshin-daily-check-in.json')
+
+const createConfigIfNotExist = (): void => {
+  if (!existsSync(configFilePath)) {
+    writeFileSync(configFilePath, JSON.stringify({
+      accounts: []
+    }))
+  }
+}
 
 const getConfig = (): Config => {
-  const data = readFileSync('./config.json', 'utf-8')
+  const data = readFileSync(configFilePath, 'utf-8')
 
   return JSON.parse(data)
 }
@@ -16,7 +28,7 @@ const addAccount = (name: string, act_id: string, cookie: string): void => {
     cookie
   })
 
-  writeFileSync('./config.json', JSON.stringify(config))
+  writeFileSync(configFilePath, JSON.stringify(config))
 }
 
 const removeAccount = (name: string): void => {
@@ -30,10 +42,11 @@ const removeAccount = (name: string): void => {
 
   config.accounts = filteredAccount
 
-  writeFileSync('./config.json', JSON.stringify(config))
+  writeFileSync(configFilePath, JSON.stringify(config))
 }
 
 export {
+  createConfigIfNotExist,
   getConfig,
   addAccount,
   removeAccount

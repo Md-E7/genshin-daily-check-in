@@ -1,10 +1,12 @@
 import { Command } from 'commander'
-import { addAccount, getConfig, removeAccount } from './utils/configUtil'
+import { addAccount, createConfigIfNotExist, getConfig, removeAccount } from './utils/configUtil'
 import { checkIn, claimAward, completeTask, reCheckIn } from './utils/fetchUtil'
 import { delay } from './utils/delayUtil'
 import { schedule } from 'node-cron'
 
 const program = new Command()
+
+createConfigIfNotExist()
 
 const { accounts } = getConfig()
 
