@@ -8,8 +8,10 @@
   },
   "scripts": {
     "build": "npx rimraf dist && tsc -p tsconfig.build.json",
-    "start": "node dist/index.js",
-    "dev": "nodemon src/index.ts",
+    "start": "node dist/index.js start",
+    "start-forever": "node dist/index.js start-forever",
+    "dev": "nodemon src/index.ts start",
+    "dev-start-forever": "nodemon src/index.ts start-forever",
     "lint": "eslint --fix src tests",
     "test": "jest"
   },
