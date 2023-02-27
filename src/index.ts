@@ -1,93 +1,17 @@
-import { readFileSync } from 'fs'
-import { ofetch } from 'ofetch'
+#! /usr/bin/env node
+import { Command } from 'commander'
+import { addAccount, createConfigIfNotExist, getConfig, removeAccount } from './utils/configUtil'
+import { checkIn, claimAward, completeTask, reCheckIn } from './utils/fetchUtil'
+import { delay } from './utils/delayUtil'
+import { schedule } from 'node-cron'
 
-interface Config {
-  accounts: Array<{
-    name: string | null
-    act_id: string | null
-    cookie: string | null
-  }> | null
-}
+const program = new Command()
 
-interface CheckInResponse {
-  data: any
-  message: string
-  retcode: number
-}
+createConfigIfNotExist()
 
-interface CompleteTaskResponse {
-  data: any
-  message: string
-  retcode: number
-}
+const { accounts } = getConfig()
 
-interface AwardResponse {
-  data: any
-  message: string
-  retcode: number
-}
-
-interface ReCheckInResponse {
-  data: any
-  message: string
-  retcode: number
-}
-
-const { accounts }: Config = JSON.parse(readFileSync('./config.json', 'utf-8'))
-
-const delay = async (ms: number): Promise<unknown> => await new Promise(resolve => setTimeout(resolve, ms))
-
-const checkIn = async (act_id: string, cookie: string): Promise<CheckInResponse> => {
-  return await ofetch<CheckInResponse>(' https://sg-hk4e-api.hoyolab.com/event/sol/sign', {
-    method: 'POST',
-    query: {
-      act_id
-    },
-    headers: {
-      cookie
-    }
-  })
-}
-
-const completeTask = async (id: number, act_id: string, cookie: string): Promise<CompleteTaskResponse> => {
-  return await ofetch<CompleteTaskResponse>('https://sg-hk4e-api.hoyolab.com/event/sol/task/complete', {
-    method: 'POST',
-    query: {
-      act_id,
-      id
-    },
-    headers: {
-      cookie
-    }
-  })
-}
-
-const claimAward = async (id: number, act_id: string, cookie: string): Promise<AwardResponse> => {
-  return await ofetch<AwardResponse>('https://sg-hk4e-api.hoyolab.com/event/sol/task/award', {
-    method: 'POST',
-    query: {
-      act_id,
-      id
-    },
-    headers: {
-      cookie
-    }
-  })
-}
-
-const reCheckIn = async (act_id: string, cookie: string): Promise<ReCheckInResponse> => {
-  return await ofetch<ReCheckInResponse>(' https://sg-hk4e-api.hoyolab.com/event/sol/resign', {
-    method: 'POST',
-    query: {
-      act_id
-    },
-    headers: {
-      cookie
-    }
-  })
-}
-
-const init = async (): Promise<void> => {
+const init = async (message: string | null): Promise<void> => {
   if (accounts == null) {
     throw new Error('Invalid config.json structure')
   }
@@ -128,15 +52,49 @@ const init = async (): Promise<void> => {
     })
 
     console.info(`[${account.name}] Re-check-in: ${JSON.stringify(reCheckInResponse)}`)
+  }
 
+  if (message != null) {
     await delay(500)
-
-    console.info(`[${account.name}] Genshin impact auto daily check in will be repeat in 24 hours`)
+    console.info(message)
   }
 }
 
-void init()
+program.name('genshin-daily-check-in').version('0.7.0')
 
-setInterval(() => {
-  void init()
-}, 24 * 60 * 60 * 1000)
+program.command('start')
+  .description('Run genshin daily check-in once')
+  .action(() => {
+    void init(null)
+  })
+
+program.command('start-forever')
+  .description('Run genshin daily check-in forever')
+  .action(() => {
+    schedule('0 12 * * *', () => {
+      void init('genshin-daily-check-in will be repeated tomorrow at 12:00')
+    }, { runOnInit: true })
+  })
+
+const accountsCommand = program.command('account')
+  .description('Add or remove account')
+
+accountsCommand.command('add')
+  .argument('<name>', 'Account name')
+  .argument('<act_id>', 'Account act_id')
+  .argument('<cookie>', 'Account cookie')
+  .action((name, act_id, cookie) => {
+    addAccount(name, act_id, cookie)
+  })
+
+accountsCommand.command('remove')
+  .argument('<name>', 'Account name')
+  .action((name) => {
+    removeAccount(name)
+  })
+
+accountsCommand.command('list').action(() => {
+  console.info(accounts)
+})
+
+program.parse()
