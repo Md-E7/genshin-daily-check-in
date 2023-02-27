@@ -1,3 +1,4 @@
+#! /usr/bin/env node
 import { Command } from 'commander'
 import { addAccount, createConfigIfNotExist, getConfig, removeAccount } from './utils/configUtil'
 import { checkIn, claimAward, completeTask, reCheckIn } from './utils/fetchUtil'
