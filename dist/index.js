@@ -5,7 +5,7 @@ const commander_1 = require("commander");
 const configUtil_1 = require("./utils/configUtil");
 const fetchUtil_1 = require("./utils/fetchUtil");
 const delayUtil_1 = require("./utils/delayUtil");
-const node_cron_1 = require("node-cron");
+const node_schedule_1 = require("node-schedule");
 const program = new commander_1.Command();
 (0, configUtil_1.createConfigIfNotExist)();
 const { accounts } = (0, configUtil_1.getConfig)();
@@ -53,9 +53,10 @@ program.command('start')
 program.command('start-forever')
     .description('Run genshin daily check-in forever')
     .action(() => {
-    (0, node_cron_1.schedule)('0 12 * * *', () => {
+    void init('genshin-daily-check-in will be repeated tomorrow at 12:00');
+    (0, node_schedule_1.scheduleJob)('0 12 * * *', () => {
         void init('genshin-daily-check-in will be repeated tomorrow at 12:00');
-    }, { runOnInit: true });
+    });
 });
 const accountsCommand = program.command('account')
     .description('Add or remove account');
