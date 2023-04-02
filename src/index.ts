@@ -3,7 +3,7 @@ import { Command } from 'commander'
 import { addAccount, createConfigIfNotExist, getConfig, removeAccount } from './utils/configUtil'
 import { checkIn, claimAward, completeTask, reCheckIn } from './utils/fetchUtil'
 import { delay } from './utils/delayUtil'
-import { schedule } from 'node-cron'
+import { scheduleJob } from 'node-schedule'
 
 const program = new Command()
 
@@ -71,9 +71,11 @@ program.command('start')
 program.command('start-forever')
   .description('Run genshin daily check-in forever')
   .action(() => {
-    schedule('0 12 * * *', () => {
+    void init('genshin-daily-check-in will be repeated tomorrow at 12:00')
+
+    scheduleJob('0 12 * * *', () => {
       void init('genshin-daily-check-in will be repeated tomorrow at 12:00')
-    }, { runOnInit: true })
+    })
   })
 
 const accountsCommand = program.command('account')
