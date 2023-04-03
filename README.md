@@ -4,9 +4,10 @@
 <summary>Windows</summary>
 
 - [Git](https://git-scm.com/)
-- [Node LTS](https://nodejs.org/)
+- [Node.js LTS](https://nodejs.org/)
 - Browser devtools untuk mendapatkan act_id dan cookie
-  - Buka check in page genshin impact dan pastikan kalian sudah melakukan login dan buka devtools dengan F12 dan pencet tab tulisan "Console" dan jalankan perinah berikut untuk otomatis mendapatkan act_id dan cookie
+  - Buka daily-check-in web page genshin impact dan pastikan kalian sudah melakukan login
+  - Buka devtools console dan jalankan script berikut untuk otomatis mendapatkan act_id dan cookie
   ```javascript
   const url = new URL(window.location.href)
   const act_id = url.searchParams.get('act_id')
@@ -23,7 +24,6 @@
     }
   
     console.log({
-      "name": "Unamed",
       "act_id": act_id,
       "cookie": cookie
     })
@@ -36,9 +36,10 @@
 
 - [Termux](https://github.com/termux/termux-app/releases)
 - Git
-- Node LTS
+- Node.js LTS
 - Kiwi browser untuk membuka devtools dan mendapatkan act_id dan cookie
-  - Buka daily check in page genshin impact dan pastikan kalian sudah melakukan login dan buka devtools dengan cara pencet titik tiga vertikal di kanan atas kiwi browser geser kebawah sampai ketemu "Developers tools" klik dan nanti kiwi browser akan membuka devtools di tab baru pindah ke tab devtools dan pencet tab tulisan "Console" dan jalankan perinah berikut untuk otomatis mendapatkan act_id dan cookie
+  - Buka daily-check-in web page genshin impact dan pastikan kalian sudah melakukan login
+  - Buka devtools console dan jalankan script berikut untuk otomatis mendapatkan act_id dan cookie
   ```javascript
   const url = new URL(window.location.href)
   const act_id = url.searchParams.get('act_id')
@@ -55,7 +56,6 @@
     }
   
     console.log({
-      "name": "Unamed",
       "act_id": act_id,
       "cookie": cookie
     })
@@ -68,63 +68,12 @@
 <details>
 <summary>Windows</summary>
 
-Jika git dan node lts sudah terinstall lakukan
+Install genshin-daily-check-in menggunakan npm
 
 ```shell
-git clone https://github.com/Md-E7/genshin-daily-check-in.git
-cd genshin-daily-check-in
-npm install
+npm install -g Md-E7/genshin-daily-check-in
 ```
 
-Setelah npm install selesai copy config.example.json dan ubah nama config.example.json menjadi config.json
-
-```shell
-cp config.example.json config.json
-```
-
-Setelah config.json sudah ada di folder edit config.json menggunakan notepad atau text/code editor yang lain
-
-```shell
-notepad config.json
-```
-Setelah text/code editor terbuka isi act_id dan cookie seperti yang kalian dapat dari browser devtools
-
-```json
-{
-  "discord_webhook_url": "",
-  "accounts": [
-    {
-      "name": "(Optional) nama genshin atau hoyolab kalian",
-      "act_id": "masukan act_id ke sini",
-      "cookie": "masukan cookie ke sini"
-    }
-  ]
-}
-```
-Untuk melakukan auto check in di banyak akun lakukan seperti ini
-
-```json
-{
-  "discord_webhook_url": "",
-  "accounts": [
-    {
-      "name": "Akun 1",
-      "act_id": "masukan act_id akun ke 1 kalian ke sini",
-      "cookie": "masukan cookie akun ke 1 kalian ke sini"
-    },
-    {
-      "name": "Akun 2",
-      "act_id": "masukan act_id akun ke 2 kalian ke sini",
-      "cookie": "masukan cookie akun ke 2 kalian ke sini"
-    },
-    {
-      "name": "Akun 3",
-      "act_id": "masukan act_id akun ke 3 kalian ke sini",
-      "cookie": "masukan cookie akun ke 3 kalian ke sini"
-    }
-  ]
-}
-```
 </details>
 
 <details>
@@ -137,69 +86,37 @@ apt update
 apt upgrade
 ```
 
-Setelah itu install git dan node
+Install nodejs
 
 ```shell
-apt install git -y
 apt install nodejs-lts -y
 ```
 
-Setelah git dan nodejs sudah terinstall lakukan git clone dan npm install
+Install genshin-daily-check-in menggunakan npm
 
 ```shell
-git clone https://github.com/Md-E7/genshin-daily-check-in.git
-cd genshin-daily-check-in
-npm install
-```
-
-Setelah npm install selesai copy config.example.json dan ubah nama config.example.json menjadi config.json
-
-```shell
-cp config.example.json config.json
-```
-
-Setelah config.json sudah ada di folder edit config.json menggunakan nano atau text/code editor yang lain
-
-```shell
-nano config.json
-```
-
-Setelah text/code editor terbuka isi act_id dan cookie seperti yang kalian dapat dari browser devtools
-
-```json
-{
-  "discord_webhook_url": "",
-  "accounts": [
-    {
-      "name": "(Optional) nama genshin atau hoyolab kalian",
-      "act_id": "masukan act_id ke sini",
-      "cookie": "masukan cookie ke sini"
-    }
-  ]
-}
-```
-Untuk melakukan auto check in di banyak akun lakukan seperti ini
-
-```json
-{
-  "discord_webhook_url": "",
-  "accounts": [
-    {
-      "name": "Akun 1",
-      "act_id": "masukan act_id akun ke 1 kalian ke sini",
-      "cookie": "masukan cookie akun ke 1 kalian ke sini"
-    },
-    {
-      "name": "Akun 2",
-      "act_id": "masukan act_id akun ke 2 kalian ke sini",
-      "cookie": "masukan cookie akun ke 2 kalian ke sini"
-    },
-    {
-      "name": "Akun 3",
-      "act_id": "masukan act_id akun ke 3 kalian ke sini",
-      "cookie": "masukan cookie akun ke 3 kalian ke sini"
-    }
-  ]
-}
+npm install -g Md-E7/genshin-daily-check-in
 ```
 </details>
+
+### Penggunaan
+
+Pertama-tama kalian harus memasukan data kalian seperti nama act_id dan cookie jika tidak genshin-daily-check-in tidak akan berkerja
+
+Data nama bisa bebas terserah kalian tapi data act_id dan cookie tidak boleh asal-asalan
+
+```shell
+genshin-daily-check-in account add [nama] [act_id] [cookie]
+```
+
+Untuk menjalankan genshin-daily-check-in sekali
+
+```shell
+genshin-daily-check-in start
+```
+
+Untuk menjalankan genshin-daily-check-in setiap hari pada jam 12:00
+
+```shell
+genshin-daily-check-in start-forever
+```
